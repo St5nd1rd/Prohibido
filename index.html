@@ -1,0 +1,93 @@
+<!DOCTYPE html><html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Método Prohibido 🚫🔥</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0d0d0d;
+      color: #fff;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+    .container {
+      max-width: 500px;
+      text-align: center;
+      background: #1a1a1a;
+      padding: 30px;
+      border-radius: 12px;
+      box-shadow: 0 0 10px rgba(255,255,255,0.1);
+    }
+    h1 {
+      font-size: 2rem;
+      color: #ff4747;
+    }
+    p {
+      font-size: 1.1rem;
+    }
+    input[type="email"] {
+      width: 100%;
+      padding: 12px;
+      margin: 15px 0;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    button {
+      padding: 12px 20px;
+      font-size: 1rem;
+      background: #ff4747;
+      border: none;
+      border-radius: 8px;
+      color: #fff;
+      cursor: pointer;
+    }
+    #step2 {
+      display: none;
+      margin-top: 20px;
+    }
+    .btc-box {
+      background: #222;
+      padding: 15px;
+      border-radius: 10px;
+      font-family: monospace;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>El Método Que Nadie Te Quiere Contar 👀🔥</h1>
+    <p>Descubre cómo montarle a cualquier plataforma con este método exclusivo. Déjanos tu correo para empezar.</p><input type="email" id="email" placeholder="Tu correo electrónico" required />
+<button onclick="mostrarPaso2()">Lo quiero ya</button>
+
+<div id="step2">
+  <h2>✅ ¡Casi listo!</h2>
+  <p>Para recibir el método, realiza un pago de <strong>$45 en BTC</strong> a esta dirección:</p>
+  <div class="btc-box">bc1q8d2phc0a2azxh2q7m56fjyn2jde0qdz8sjx5aj</div>
+  <p>Una vez hecho el pago, envía el comprobante a:</p>
+  <div class="btc-box">easysoport@gmail.com</div>
+</div>
+
+  </div>  <script>
+    function mostrarPaso2() {
+      const email = document.getElementById("email").value;
+      if (email.includes("@")) {
+        document.getElementById("step2").style.display = "block";
+      } else {
+        alert("MMG, escribe bien ese correo pa' mandarte la info.");
+      }
+    }
+  </script>
+    
+  <h3>Contacto Telegram:</h3>DKSoport.
+ <h3> Correo Directo:</h3> Easysoport@gmail.com
+  </body>
+</html>
