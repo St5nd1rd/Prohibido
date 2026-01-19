@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BEST BIN SHOP</title>
+  <style>
+    :root{
+      --tg-bg:#0f172a; /* telegram dark-ish */
+      --tg-card:#111827;
+      --tg-accent:#2ea6ff;
+      --tg-pink:#ff5ea8;
+      --tg-green:#22c55e;
+      --tg-text:#e5e7eb;
+      --tg-muted:#9ca3af;
+      --radius:18px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0; font-family:system-ui,-apple-system,Segoe UI,Roboto,Ubuntu;
+      background:linear-gradient(180deg,#0b1021,#020617);
+      color:var(--tg-text);
+    }
+    header{
+      position:sticky; top:0; z-index:9;
+      backdrop-filter: blur(8px);
+      background:rgba(2,6,23,.7);
+      border-bottom:1px solid rgba(255,255,255,.06);
+    }
+    .wrap{max-width:1200px;margin:auto;padding:16px}
+    .title{
+      display:flex; align-items:center; gap:14px; justify-content:center;
+    }
+    .logo{
+      width:44px;height:44px;border-radius:12px;
+      background:conic-gradient(from 180deg at 50% 50%, #2ea6ff, #ff5ea8, #22c55e, #2ea6ff);
+      box-shadow:0 0 30px rgba(46,166,255,.45);
+      animation:spin 6s linear infinite;
+    }
+    @keyframes spin{to{transform:rotate(360deg)}}
+    h1{
+      margin:6px 0;
+      font-size:clamp(22px,4vw,34px);
+      letter-spacing:.5px;
+      background:linear-gradient(90deg,#2ea6ff,#ff5ea8,#22c55e);
+      -webkit-background-clip:text; background-clip:text; color:transparent;
+      text-shadow:0 0 20px rgba(255,255,255,.15);
+    }
+    .subtitle{ text-align:center; color:var(--tg-muted); font-size:13px }
+
+    .grid{
+      display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px;
+      margin-top:18px;
+    }
+    .card{
+      background:linear-gradient(180deg, rgba(17,24,39,.9), rgba(17,24,39,.7));
+      border:1px solid rgba(255,255,255,.06);
+      border-radius:var(--radius);
+      padding:14px;
+      transition:transform .2s ease, box-shadow .2s ease;
+    }
+    .card:hover{ transform:translateY(-3px); box-shadow:0 10px 30px rgba(0,0,0,.35) }
+    .row{ display:flex; align-items:center; gap:10px }
+    .img{
+      width:40px;height:40px;border-radius:10px; background:#020617;
+      display:grid; place-items:center; overflow:hidden; border:1px solid rgba(255,255,255,.08)
+    }
+    .img img{ width:100%; height:100%; object-fit:contain; }
+    .name{ font-weight:600 }
+    .meta{ color:var(--tg-muted); font-size:12px }
+    .price{
+      margin-top:10px; display:flex; align-items:center; justify-content:space-between
+    }
+    .badge{ padding:6px 10px; border-radius:999px; font-size:12px; background:rgba(46,166,255,.15); color:#7dd3fc }
+    .usd{ font-weight:700 }
+    .buy{
+      margin-top:10px; width:100%; border-radius:14px; border:0; padding:10px 12px;
+      background:linear-gradient(90deg,#2ea6ff,#ff5ea8);
+      color:white; font-weight:700; cursor:pointer
+    }
+
+    /* Modal */
+    .modal{
+      position:fixed; inset:0; display:none; place-items:center; background:rgba(2,6,23,.6)
+    }
+    .modal.on{ display:grid }
+    .box{
+      width:min(420px,92vw); background:var(--tg-card); border-radius:22px; padding:16px;
+      border:1px solid rgba(255,255,255,.08)
+    }
+    .box h3{ margin:6px 0 2px }
+    .box .muted{ color:var(--tg-muted); font-size:13px }
+    .qr{
+      margin:14px auto; width:200px; height:200px; border-radius:16px;
+      background:#020617; border:1px dashed rgba(255,255,255,.15);
+      display:grid; place-items:center; overflow:hidden
+    }
+    .qr img{ width:100%; height:100%; object-fit:contain }
+    .addr{
+      background:#020617; border:1px solid rgba(255,255,255,.1);
+      border-radius:12px; padding:10px; text-align:center; font-family:monospace; word-break:break-all
+    }
+    .verify{
+      margin-top:12px; width:100%; border-radius:14px; border:0; padding:10px 12px;
+      background:linear-gradient(90deg,#22c55e,#2ea6ff);
+      color:#020617; font-weight:800; cursor:pointer
+    }
+    .status{ margin-top:10px; font-size:13px }
+
+    footer{
+      margin-top:30px; border-top:1px solid rgba(255,255,255,.06)
+    }
+    footer .wrap{ display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:center }
+    .foot-title{ font-weight:800; letter-spacing:.6px }
+    .demo{ color:#fca5a5; font-size:12px }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="wrap">
+      <div class="title">
+        <div class="logo"></div>
+        <h1>BEST BIN SHOP</h1>
+      </div>
+      
+    </div>
+  </header>
+
+  <main class="wrap">
+    <div class="grid" id="grid"></div>
+  </main>
+
+  <div class="modal" id="modal">
+    <div class="box">
+      <h3>Pagar con Bitcoin (BTC)</h3>
+      
+      <div class="qr"><img src="QR.png" alt="QR BTC" /></div>
+      <div class="addr" id="addr">bc1qgq5eeehwgntecnnln45lnnurwwzshn6d9d6h9m</div>
+      <button class="verify" id="verify">Verificar pago</button>
+      <div class="status" id="status"></div>
+    </div>
+  </div>
+
+ <center>
+    <footer>
+    <div class="wrap">
+      <div class="foot-title">© 2026 · BEST BIN SHOP · All rights reserved</div>
+      </div>
+  </footer>
+  
+ </center>
+
+<script>
+  // ====== DATA (DEMO) ======
+  const items = [
+    {n:'Netflix', img:'Netflix.svg', p:89, usd:39},
+    {n:'Amazon', img:'Amazon.png', p:72, usd:29},
+    {n:'Disney Plus', img:'Disneyplus.png', p:65, usd:24},
+    {n:'HBO Max', img:'HBOMax.png', p:61, usd:22},
+    {n:'Spotify', img:'Spotify.png', p:58, usd:19},
+    {n:'YouTube Premium', img:'YouTube.png', p:55, usd:18},
+    {n:'Apple TV+', img:'AppleTV.png', p:52, usd:17},
+    {n:'Prime Video', img:'PrimeVideo.png', p:70, usd:27},
+    {n:'Paramount+', img:'Paramount+.png', p:49, usd:16},
+    {n:'Peacock', img:'Peacock.png', p:47, usd:15},
+    {n:'Hulu', img:'Hulu.png', p:66, usd:23},
+    {n:'Crunchyroll', img:'Crunchyroll.png', p:44, usd:14},
+    {n:'Twitch', img:'Twitch.png', p:42, usd:13},
+    {n:'Steam', img:'Steam.png', p:71, usd:28},
+    {n:'Epic Games', img:'EpicGames.png', p:69, usd:26},
+    {n:'PlayStation', img:'PlayStation.png', p:68, usd:25},
+    {n:'Xbox', img:'Xbox.png', p:67, usd:24},
+    {n:'Nintendo', img:'Nintendo.png', p:64, usd:22},
+    {n:'eBay', img:'eBay.png', p:63, usd:21},
+    {n:'AliExpress', img:'AliExpress.png', p:60, usd:20},
+    {n:'Shein', img:'Shein.png', p:59, usd:19},
+    {n:'Temu', img:'Temu.png', p:57, usd:18},
+    {n:'Uber', img:'Uber.png', p:54, usd:17},
+    {n:'Uber Eats', img:'UberEats.png', p:53, usd:17},
+    {n:'DoorDash', img:'DoorDash.png', p:51, usd:16},
+    {n:'Rappi', img:'Rappi.png', p:50, usd:16},
+    {n:'Glovo', img:'Glovo.png', p:48, usd:15},
+    {n:'Walmart', img:'Walmart.png', p:62, usd:21},
+    {n:'Target', img:'Target.png', p:56, usd:18},
+    {n:'Best Buy', img:'Best Buy.png', p:65, usd:23},
+    {n:'Etsy', img:'Etsy.png', p:46, usd:14},
+    {n:'Mercado Libre', img:'MercadoLibre.png', p:52, usd:17},
+  ];
+
+  const grid = document.getElementById('grid');
+  const modal = document.getElementById('modal');
+  const verify = document.getElementById('verify');
+  const status = document.getElementById('status');
+
+  function card(i){
+    return `
+      <div class="card">
+        <div class="row">
+          <div class="img"><img src="${i.img}" alt="${i.n}" /></div>
+          <div>
+            <div class="name">${i.n}</div>
+            <div class="meta">BIN ${i.p}%</div>
+          </div>
+        </div>
+        <div class="price">
+          <span class="badge">${i.p}%</span>
+          <span class="usd">$${i.usd} USDT</span>
+        </div>
+        <button class="buy">Comprar</button>
+      </div>`;
+  }
+
+  grid.innerHTML = items.map(card).join('');
+  grid.addEventListener('click', e=>{
+    if(e.target.classList.contains('buy')){
+      modal.classList.add('on');
+      status.textContent='';
+    }
+  });
+  modal.addEventListener('click', e=>{ if(e.target===modal) modal.classList.remove('on'); });
+
+  verify.addEventListener('click', ()=>{
+    status.textContent = 'Verificando en la blockchain...';
+    verify.disabled = true;
+    let t = 6;
+    const iv = setInterval(()=>{
+      status.textContent = `Verificando en la blockchain... ${t--}s`;
+      if(t<0){
+        clearInterval(iv);
+        status.textContent = 'Error: no se detectó ningún pago en la blockchain. Intente de nuevo.'
+        verify.disabled = false;
+      }
+    },1000);
+  });
+</script>
+</body>
+</html>
